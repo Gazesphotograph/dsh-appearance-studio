@@ -82,7 +82,7 @@ window.__ModuleLoader__.load({
       sectionDetails: '界面细节',
       sectionDetailsHint: '侧栏材质、边框对比度与代码差异高亮。',
       translucentSidebar: '半透明侧边栏',
-      translucentSidebarHint: '使用磨砂玻璃材质，透出应用内的柔和底纹。',
+      translucentSidebarHint: '模糊应用背后的窗口内容，浅色与深色自动适配。',
       contrast: '对比度',
       contrastHint: '提高边框和键盘焦点的可见度。',
       contrastDefault: '标准',
@@ -168,7 +168,7 @@ window.__ModuleLoader__.load({
       sectionDetails: 'Interface details',
       sectionDetailsHint: 'Sidebar material, contrast, and diff highlighting.',
       translucentSidebar: 'Translucent sidebar',
-      translucentSidebarHint: 'Use frosted glass over the application’s soft backdrop.',
+      translucentSidebarHint: 'Blur the windows behind this app with native Acrylic, adapted to light and dark mode.',
       contrast: 'Contrast',
       contrastHint: 'Strengthen borders and keyboard focus indicators.',
       contrastDefault: 'Standard',
@@ -914,7 +914,7 @@ window.__ModuleLoader__.load({
     /** The global stylesheet plus the attribute-driven effects. */
     const GLOBAL_CSS = `
       html[data-as-translucent-sidebar=true] .mP3x-q_frame{
-        background:radial-gradient(ellipse at 2% 15%,color-mix(in srgb,var(--dsw-alias-state-business-primary) 30%,transparent),transparent 42%),radial-gradient(ellipse at 8% 95%,color-mix(in srgb,var(--dsw-alias-state-business-primary) 16%,#bb9a7010),transparent 52%),var(--dsw-alias-bg-base);
+        background:radial-gradient(ellipse at 2% 15%,color-mix(in srgb,var(--dsw-alias-label-primary) 3%,transparent),transparent 42%),var(--dsw-specific-sidebar-fill);
       }
       html[data-as-translucent-sidebar=true] .mP3x-q_sidebarCol{
         background:color-mix(in srgb,var(--dsw-specific-sidebar-fill) 66%,transparent);
@@ -924,6 +924,19 @@ window.__ModuleLoader__.load({
       }
       html[data-as-translucent-sidebar=true] .dsh-function-rail{background:color-mix(in srgb,var(--dsw-alias-bg-base) 14%,transparent)}
       html[data-as-translucent-sidebar=true][data-windows-titlebar] .mP3x-q_frame:before{background:color-mix(in srgb,var(--dsw-specific-sidebar-fill) 75%,transparent)}
+      /* The shell confirms native support before any opaque root is removed. */
+      html[data-as-native-glass=true][data-as-translucent-sidebar=true],
+      html[data-as-native-glass=true][data-as-translucent-sidebar=true] body,
+      html[data-as-native-glass=true][data-as-translucent-sidebar=true] .mP3x-q_frame{background:transparent!important}
+      html[data-as-native-glass=true][data-as-translucent-sidebar=true] .mP3x-q_sidebarCol{
+        background:color-mix(in srgb,var(--dsw-specific-sidebar-fill) 60%,transparent);
+        backdrop-filter:none;-webkit-backdrop-filter:none;
+      }
+      html[data-as-native-glass=true][data-as-translucent-sidebar=true] body[data-ds-dark-theme] .mP3x-q_sidebarCol{
+        background:color-mix(in srgb,var(--dsw-specific-sidebar-fill) 42%,transparent);
+      }
+      html[data-as-native-glass=true][data-as-translucent-sidebar=true][data-windows-titlebar] .mP3x-q_frame:before{background:color-mix(in srgb,var(--dsw-specific-sidebar-fill) 60%,transparent)}
+      html[data-as-native-glass=true][data-as-translucent-sidebar=true][data-windows-titlebar] body[data-ds-dark-theme] .mP3x-q_frame:before{background:color-mix(in srgb,var(--dsw-specific-sidebar-fill) 42%,transparent)}
       @media(prefers-reduced-transparency:reduce){html[data-as-translucent-sidebar=true] .mP3x-q_sidebarCol{background:var(--dsw-specific-sidebar-fill);backdrop-filter:none;-webkit-backdrop-filter:none}}
 
       html[data-as-reduced-motion='true'] *,
