@@ -939,6 +939,59 @@ window.__ModuleLoader__.load({
       html[data-as-native-glass=true][data-as-translucent-sidebar=true][data-windows-titlebar] body[data-ds-dark-theme] .mP3x-q_frame:before{background:color-mix(in srgb,var(--dsw-specific-sidebar-fill) 42%,transparent)}
       @media(prefers-reduced-transparency:reduce){html[data-as-translucent-sidebar=true] .mP3x-q_sidebarCol{background:var(--dsw-specific-sidebar-fill);backdrop-filter:none;-webkit-backdrop-filter:none}}
 
+      /* Shared floating surfaces: tint belongs behind the content, while blur
+         samples at the surface boundary instead of an isolated negative child. */
+      html body, html body[data-ds-dark-theme] {
+        --as-floating-solid:var(--dsw-alias-bg-layer-2);
+        --dsw-menu-surface-fill:var(--as-floating-fill);
+        --dsw-specific-menu:var(--as-floating-fill);
+        --dsw-menu-backdrop-filter:blur(24px) saturate(1.08);
+      }
+      html body { --as-floating-fill:color-mix(in srgb,var(--as-floating-solid) 96%,transparent); }
+      html body[data-ds-dark-theme] { --as-floating-fill:color-mix(in srgb,var(--as-floating-solid) 92%,transparent); }
+      html body [data-menu-material="translucent"] {
+        backdrop-filter:var(--dsw-menu-backdrop-filter);
+        -webkit-backdrop-filter:var(--dsw-menu-backdrop-filter);
+      }
+      html body [data-menu-material="solid"] {
+        --dsw-menu-surface-fill:var(--as-floating-solid);
+        backdrop-filter:none;-webkit-backdrop-filter:none;
+      }
+      html body [data-menu-material] > ._material_ri079_21 {
+        backdrop-filter:none;-webkit-backdrop-filter:none;
+      }
+      html body :is(.F07MqG_panel,.VBK9GG_panel,.Fu0XRq_panel,.Gc24Bq_bar,.rezYhW_menu) {
+        backdrop-filter:var(--dsw-menu-backdrop-filter);
+        -webkit-backdrop-filter:var(--dsw-menu-backdrop-filter);
+      }
+      html body :is(.F07MqG_panel,.VBK9GG_panel,.Fu0XRq_panel,.Gc24Bq_bar,.rezYhW_menu)::before {
+        backdrop-filter:none;-webkit-backdrop-filter:none;
+      }
+      html body :is(.flb-drop,.flb-notice,.dsh-conversation-drawer[data-preview="true"]) {
+        background:var(--as-floating-fill);
+        backdrop-filter:var(--dsw-menu-backdrop-filter);
+        -webkit-backdrop-filter:var(--dsw-menu-backdrop-filter);
+      }
+      @media (prefers-reduced-transparency:reduce) {
+        html body,html body[data-ds-dark-theme] {
+          --as-floating-fill:var(--as-floating-solid);
+          --dsw-menu-backdrop-filter:none;
+        }
+      }
+      @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+        html body,html body[data-ds-dark-theme] {
+          --as-floating-fill:var(--as-floating-solid);
+          --dsw-menu-backdrop-filter:none;
+        }
+      }
+      @media (forced-colors:active) {
+        html body,html body[data-ds-dark-theme] {
+          --as-floating-solid:Canvas;--as-floating-fill:Canvas;
+          --dsw-menu-backdrop-filter:none;
+        }
+        html body [data-menu-material] { outline:1px solid CanvasText; }
+      }
+
       html[data-as-reduced-motion='true'] *,
       html[data-as-reduced-motion='true'] *::before,
       html[data-as-reduced-motion='true'] *::after {

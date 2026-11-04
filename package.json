@@ -1,9 +1,9 @@
 {
   "name": "@local/dsh-appearance-studio",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": true,
   "type": "module",
-  "description": "Appearance studio with native Windows Acrylic that follows underlying windows.",
+  "description": "Native Windows Acrylic appearance with readable, consistent menus and floating surfaces.",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
