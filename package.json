@@ -1,6 +1,6 @@
 {
   "name": "@local/dsh-appearance-studio",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "type": "module",
   "description": "Native Windows Acrylic appearance with readable, consistent menus and floating surfaces.",
@@ -19,7 +19,8 @@
     "icon.svg",
     "fonts.js",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "scripts/patch-desktop.cjs"
   ],
   "dsh": {
     "bundle": {
@@ -45,5 +46,9 @@
   },
   "scripts": {
     "test": "node tests/appearance-regression.mjs"
+  },
+  "dshCompatibility": {
+    "testedHarness": "0.2.2-rc.3",
+    "platform": "win32-x64"
   }
 }

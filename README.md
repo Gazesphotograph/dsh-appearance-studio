@@ -2,9 +2,26 @@
 
 为 DeepSeek Harness 提供主题配色、系统字体选择、字号调整和半透明侧栏。
 
-插件：`@local/dsh-appearance-studio` · 版本：**1.5.0**
+插件：`@local/dsh-appearance-studio` · 版本：**1.6.0**
 
-适用版本：**DeepSeek Harness 0.2.1-rc.5**。
+适用版本：**DeepSeek Harness 0.2.2-rc.3**。
+
+## 1.6.0 更新（2026-11-13）
+
+- 验证 DeepSeek Harness 0.2.2-rc.3 的主题、字体、菜单样式及原生 Acrylic。
+- 新增仅适用 0.2.2-rc.3 的可复跑桌面补丁脚本，保留新版运行时和更新逻辑，恢复 Acrylic、视图/帮助菜单。
+- 补丁校验应用版本及预期代码位置，备份原始 app.asar，逐文件核对重打包内容；无需分发修改后的 app.asar。
+
+## 桌面补丁
+
+先完整退出 Harness（包括托盘），仅对 **0.2.2-rc.3 / Windows 11** 使用：
+
+```powershell
+node scripts/patch-desktop.cjs --check
+node scripts/patch-desktop.cjs
+```
+
+自定义安装位置传入 `--app-dir=C:/path/to/DeepSeek Harness`。脚本只替换桌面标题栏与外观桥接的两个文件；保存 `resources/app.asar.rc3-original`。恢复时完整退出应用，再用备份覆盖 `resources/app.asar`。脚本重复执行会识别已安装状态，其他应用版本会拒绝修改。
 
 ## 功能与数据
 
@@ -14,8 +31,8 @@
 
 原生半透明效果依赖配套桌面壳补丁，模糊应用下层窗口；正文保持实色。
 浅色遮罩 60%，深色 42%。关闭开关、减少透明度或高对比度时回退为实色。
-本仓库仅包含插件源码，不包含或自动安装 `app.asar` 补丁；未适配的桌面壳
-无法启用原生 Acrylic。DSH 更新覆盖桌面壳后需要重新适配。系统字体枚举依赖 Windows。
+本仓库包含插件源码与手动运行的版本限定补丁脚本，不分发修改后的 `app.asar`。
+未适配的桌面壳无法启用原生 Acrylic。DSH 更新覆盖桌面壳后需要重新适配。系统字体枚举依赖 Windows。
 主题和字体交给 Harness 的 theme 服务保存；额外外观偏好保存在浏览器的
 `localStorage` 项 `dsh.appearance-studio.v1` 中。卸载插件会清理当前注入的样式，
 已保存的偏好不会随卸载自动删除。
